@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Hello World Websocket</title>
+</head>
+<body>
+
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  
+  var socket = io('http://localhost:8080');
+  socket.on('news', function (data) {
+    
+    console.log(data);
+    emitEvent();
+  });
+
+  function emitEvent() {
+  	socket.emit('my other event', { my: 'data' });
+  }
+</script>
+
+<h1>This is a Heading</h1>
+<p>This is a paragraph.</p>
+<button id="btn-emit" onClick="emitEvent()">Emit</button>
+</body>
+</html>
