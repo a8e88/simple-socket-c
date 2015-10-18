@@ -18,13 +18,13 @@ app.get('/', function (req, res) {
 function handler (req, res) {
  
   var filePath = __dirname + '/public/index.html';
-  console.log('Received incomming request');
-  console.log('Served:%s', filePath);
+  console.log('Received http request');
+  console.log('Server response web page:%s', filePath);
 
   fs.readFile(filePath, function (err, data) {
 
-		if (err) {
-	      res.writeHead(500);
+	    if (err) {
+	      rs.writeHead(500);
 	      return res.end('Error loading index.html');
 	    }
 
@@ -35,8 +35,8 @@ function handler (req, res) {
 
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'world' });
+  socket.emit('news', { hello: 'hello world' });
   socket.on('my other event', function (data) {
-    console.log(data);
+    console.log('Received message from client:' + data.my);
   });
 });
