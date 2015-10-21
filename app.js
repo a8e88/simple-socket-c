@@ -4,7 +4,8 @@ var app = require('http').createServer(handler)
 var io = require('socket.io')(app);
 var fs = require('fs');
 
-app.listen(80);
+app.listen(8080);
+
 /*
 app.get('/', function (req, res) {
 
@@ -35,8 +36,17 @@ function handler (req, res) {
 
 
 io.on('connection', function (socket) {
-  socket.emit('news', { hello: 'hello world' });
-  socket.on('my other event', function (data) {
+
+  console.log('Client connected to server:' + socket);
+  socket.emit('msg-server', { hello: 'hello world' });
+
+  socket.on('msg-client', function (data) {
+
     console.log('Received message from client:' + data.my);
+    console.log('Completed task');
+
+    var msg = data.my + ' : ' + new Date();
+    socket.emit('msg-server', {hello: msg});
   });
+
 });

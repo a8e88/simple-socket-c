@@ -8,15 +8,21 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   
-  var socket = io('http://ec2-54-179-151-60.ap-southeast-1.compute.amazonaws.com');
-  socket.on('news', function (data) {
-    
+  var config = {
+  	host: 'http://localhost:8080',
+  }
+
+  var socket = io(config.host);
+  socket.on('msg-server', function (data) {
     console.log('Received message from server:' +  data.hello);
-    emitEvent();
   });
 
   function emitEvent() {
-  	socket.emit('my other event', { my: 'data' });
+  	try {
+  		socket.emit('msg-client', { my: 'data' });
+  	} catch (e) {
+  		consol.log(e);
+  	}
   }
 </script>
 
